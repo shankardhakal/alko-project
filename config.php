@@ -4,10 +4,10 @@ return [
 
     'database' => [
         'database_type' => 'mysql',
-        'database_name' => 'sdhakal_newdb',
+        'database_name' => 'db_newdb',
         'server' => 'localhost',
-        'username' => 'sdhakal_newdb',
-        'password' => 'newdb',
+        'username' => 'db_newdb',
+        'password' => 'newpwd',
         'charset' => 'utf8'
     ]
 ];
