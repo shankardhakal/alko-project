@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ALKO PRICE PROJECT</title>
+<script
+  src="https://code.jquery.com/jquery-2.2.4.js"
+  integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+  crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="src/main.css" media="screen" />
+<script>
+
+$(document).ready(function(){
+$.getJSON('https://shankardhakal.com/alko-project/api.php?token=dfas854XX',function(response){
+  $.each(response, function(i, item) {
+        var $tr = $('<tr>').append(
+            $('<td>').text(item.Number),
+            $('<td>').text(item.Bottlesize),
+            $('<td>').text(item.Price),
+            $('<td>').text(item.Timestamp),
+            $('<td class="order-amount">').text(item.Orderamount),
+            $('<td>').text(item.Name),
+            $('<td>').html('<span><button class="button" data-type="add" data-id='+item.id+'>Add</button> <button data-type="clear" class="button" data-id='+item.id+'>Clear</button></span>')
+        ).appendTo('#alko-price');
+ 
+
+});
+
+});
+
+$('body').on('click', '.button', function() {
+console.log(event);
+var type = $(this).data('type');
+
+
+var target = $(this).parent().parent().parent().find('.order-amount');
+if (type==='clear'){
+var data = {"id": $(this).data('id'), 'Orderamount':0};
+
+
+var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": "./api.php",
+  "method": "POST",
+  "mimeType": "multipart/form-data",
+  "data": data
+}
+
+$.ajax(settings).done(function (response) {
+ target.text(0);
+});
+
+
+}
+
+else {
+var data = {"id": $(this).data('id'), 'Orderamount':1};
+
+var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": "./api.php",
+  "method": "POST",
+  "mimeType": "multipart/form-data",
+  "data": data
+}
+
+$.ajax(settings).done(function (response) {
+
+response= JSON.parse(response);
+target.text(response.newOrderAmount);
+
+
+   
+
+
+ 
+ 
+});
+
+
+
+}
+
+
+} );
+
+});
+    </script>
+</head>
+<body>
+<h2 align="center"> ALKO PRICE TABLE </h2>
+<div id="showData"></div>
+<table id="alko-price">
+<tr><th>Number</th><th>Bottlesize</th><th>Price</th><th>Timestamp</th><th>Orderamount</th><th>Name</th><th>Action</th></tr>
+
+
+</table>
+
+</body>
+</html>
